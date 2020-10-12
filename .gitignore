@@ -3,3 +3,4 @@
 .ipynb_checkpoints
 reports
 *.csv
+*.db
