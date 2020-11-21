@@ -10,8 +10,7 @@ So, I've come to the conclusion that I should extract my bank movements for each
 
 ## How does this work?
 
-This repo consists of three different parts:
+This repo consists of two different parts:
 
-* A Python script extractor.py, that expects the directory where the reports live as argument. It will extract the data from all the reports and write them to a CSV file.
-* A small SQL script load.sql, used to load the CSV into a SQLite 3 database.
-* A Jupyter notebook that loads the CSV into Pandas, performs some data exploration and shows it via matplotlib.
+* A Python script that extracts data from monthly reports to a csv or sqlite file.
+* A Jupyter notebook that loads the extracted data, performs some data exploration and shows it via matplotlib.
