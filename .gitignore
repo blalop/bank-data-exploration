@@ -1,9 +1,10 @@
 __pycache__
+.ipynb_checkpoints
+.mypy_cache
+
+bbva_reports
+*.csv
+*.db
 
 .vscode
 .idea
-.ipynb_checkpoints
-
-reports
-*.csv
-*.db

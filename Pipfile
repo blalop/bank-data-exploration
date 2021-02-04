@@ -4,15 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
-pandas = "*"
-pdftotext = "*"
-jupyter = "*"
-numpy = "*"
-matplotlib = "*"
-scipy = "*"
+pandas = "==1.2.1"
+numpy = "==1.20.0"
+pdftotext = "==2.1.5"
+dash = "==1.19.0"
 
 [dev-packages]
 pylint = "*"
+autopep8 = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.8"
