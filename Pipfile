@@ -5,7 +5,7 @@ verify_ssl = true
 
 [packages]
 pandas = "==1.2.1"
-numpy = "==1.20.0"
+numpy = "*"
 pdftotext = "==2.1.5"
 dash = "==1.19.0"
 
