@@ -20,5 +20,5 @@ install:
   - pipenv sync --dev
 
 script:
-  - pipenv run mypy accountman
-  - pipenv run python -m unittest discover tests
+  - mypy accountman
+  - python -m unittest discover
