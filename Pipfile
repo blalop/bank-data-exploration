@@ -8,6 +8,7 @@ pandas = "==1.2.1"
 numpy = "*"
 pdftotext = "==2.1.5"
 dash = "==1.19.0"
+waitress = "*"
 
 [dev-packages]
 pylint = "*"

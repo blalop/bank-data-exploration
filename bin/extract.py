@@ -1,10 +1,13 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 import argparse
+import logging
 import sqlite3
 import os
 import sys
 
+
+logging.basicConfig(level=os.getenv('LOGLEVEL', 'INFO'))
 
 try:
     from accountman import extract_directory
@@ -18,12 +21,15 @@ def main(dirname, output_format):
     if output_format == 'csv':
         dataframe.to_csv('movements.csv', sep='|', index=False)
     elif output_format == 'sql':
-        dataframe.to_sql('MOVEMENTS', sqlite3.connect('movements.db'), if_exists='replace', index=False)
+        dataframe.to_sql('MOVEMENTS', sqlite3.connect(
+            'movements.db'), if_exists='replace', index=False)
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Extracts data from BBVA reports PDF files')
+    parser = argparse.ArgumentParser(
+        description='Extracts data from BBVA reports PDF files')
     parser.add_argument('dirname', help='Directory of the PDF files')
-    parser.add_argument('output_format', help='Format of the output', choices=['sql', 'csv'])
+    parser.add_argument(
+        'output_format', help='Format of the output', choices=['sql', 'csv'])
     args = parser.parse_args()
     main(args.dirname, args.output_format)

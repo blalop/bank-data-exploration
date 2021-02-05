@@ -1,33 +1,74 @@
+import dash_core_components as dcc
+import dash_html_components as html
 import plotly.express as px
 
-
-def balance_fig(calc):
-    return px.line(calc.movements, x='date', y='balance', title='Overall balance')
+from accountman.calculator import Calculator
 
 
-def salary_fig(calc):
-    return px.line(calc.salary_movements(),
-                   x='date',
-                   y='balance',
-                   title='Balance at pay moment')\
-        .update_traces(mode='markers+lines')
+def plot(calc: Calculator) -> html.Div:
+    return html.Div(id='graphics', children=[
 
+        html.H1(children='BBVA bank report'),
 
-def combined_by_month_fig(calc):
-    return px.bar(calc.combined_by_month(), title='Spending vs incoming by month')
+        html.H3(children='''
+            Balance evolution
+        '''),
 
+        html.Button('Update', id='update-button'),
 
-def diff_by_month_fig(calc):
-    return px.bar(calc.diff_by_month(), title='Diff by month')
+        dcc.Graph(
+            id='balance',
+            figure=px.line(calc.movements,
+                           x='date',
+                           y='balance',
+                           title='Overall balance')
+        ),
 
+        dcc.Graph(
+            id='pay_balance',
+            figure=px.line(calc.salary_movements(),
+                           x='date',
+                           y='balance',
+                           title='Balance at pay moment')
+            .update_traces(mode='markers+lines')
+        ),
 
-def combined_by_concept_fig(calc):
-    return px.bar(calc.combined_by_concept(), title='Spending vs incoming by concept')
+        html.H3(children='''
+            Spending vs incoming
+        '''),
 
+        dcc.Graph(
+            id='combined_by_month',
+            figure=px.bar(calc.combined_by_month(),
+                          title='Spending vs incoming by month')
+        ),
 
-def spending_boxplot(calc):
-    return px.box(calc.spending_abs(), title='Spending boxplot')
+        dcc.Graph(
+            id='diff_by_month',
+            figure=px.bar(calc.diff_by_month(),
+                          title='Diff by month')
+        ),
 
+        dcc.Graph(
+            id='combined_by_concept',
+            figure=px.bar(calc.combined_by_concept(),
+                          title='Spending vs incoming by concept')
+        ),
 
-def spending_by_concept_fig(calc):
-    return px.bar(calc.spending_by_concept(), title='Spending by concept')
+        html.H3(children='''
+            Spending
+        '''),
+
+        dcc.Graph(
+            id='spending_boxplot',
+            figure=px.box(calc.spending_abs(),
+                          title='Spending boxplot')
+        ),
+
+        dcc.Graph(
+            id='spending_by_concept',
+            figure=px.bar(calc.spending_by_concept(),
+                          title='Spending by concept')
+        ),
+
+    ])

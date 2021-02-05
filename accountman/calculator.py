@@ -8,7 +8,8 @@ import accountman.extractor as extr
 
 logger = logging.getLogger(__name__)
 
-def _group_by_month(df: pd.DataFrame, aggr_dict: dict):
+
+def _group_by_month(df: pd.DataFrame, aggr_dict: dict) -> pd.DataFrame:
     grouped_df = df.set_index('date').groupby(
         pd.Grouper(freq='M')).aggregate(aggr_dict)
     grouped_df.index = grouped_df.index.map(
@@ -17,13 +18,13 @@ def _group_by_month(df: pd.DataFrame, aggr_dict: dict):
 
 
 class Calculator:
-    def __init__(self, dir) -> None:
+    def __init__(self, dir: str) -> None:
         self.dir = dir
         self.update_movements()
 
     def update_movements(self) -> None:
-        logger.info(f'Updating movements from {self.dir}')
         self.movements = extr.extract_directory(self.dir).sort_values('date')
+        logger.info(f'Found {len(self.movements.index)} movements')
 
     def salary_movements(self) -> pd.DataFrame:
         return self.movements[self.movements['concept'].str.contains('NOMINA')]
