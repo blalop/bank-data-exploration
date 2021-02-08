@@ -9,7 +9,7 @@ server = flask.Flask(__name__)
 
 app = dash.Dash(__name__,
                 server=server,
-                external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
+                external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css', 'stylesheet.css'])
 
 calc = Calculator('bbva_reports')
 
@@ -26,3 +26,8 @@ def health():
 def display_page(n):
     calc.update_movements()
     return plotter.plot(calc)
+
+@app.callback(dash.dependencies.Output('spending-biggest-tab', 'data'),
+              dash.dependencies.Input('spending-biggest-input', 'value'))
+def update_output(input):
+    return calc.spending_biggest(input).to_dict('records')

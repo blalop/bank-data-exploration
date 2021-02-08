@@ -54,6 +54,10 @@ class TestCalculator(unittest.TestCase):
         pickle = pd.read_pickle(self.get_pickle('spending-abs'))
         self.assertTrue(self.calc.spending_abs().equals(pickle))
 
+    def test_spending_abs(self):
+        pickle = pd.read_pickle(self.get_pickle('spending-biggest'))
+        self.assertTrue(self.calc.spending_biggest().equals(pickle))
+
     def test_combined_by_concept(self):
         pickle = pd.read_pickle(self.get_pickle('combined-concept'))
         self.assertTrue(self.calc.combined_by_concept().equals(pickle))

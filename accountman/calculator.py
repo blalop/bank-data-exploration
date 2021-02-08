@@ -63,5 +63,8 @@ class Calculator:
     def spending_abs(self) -> pd.DataFrame:
         return self.spending().amount.abs()
 
+    def spending_biggest(self, amount: int = 0) -> pd.DataFrame:
+        return self.spending().query(f'amount < -{amount} & concept != "TRANSFERENCIAS"').drop(columns=['value_date', 'card', 'balance'])
+
     def spending_by_concept_sorted(self) -> pd.DataFrame:
         return self.spending_by_concept().abs().sort_values()

@@ -1,5 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table as dt
 import plotly.express as px
 
 from accountman.calculator import Calculator
@@ -25,7 +26,7 @@ def plot(calc: Calculator) -> html.Div:
         ),
 
         dcc.Graph(
-            id='pay_balance',
+            id='pay-balance',
             figure=px.line(calc.salary_movements(),
                            x='date',
                            y='balance',
@@ -38,19 +39,19 @@ def plot(calc: Calculator) -> html.Div:
         '''),
 
         dcc.Graph(
-            id='combined_by_month',
+            id='combined-by-month',
             figure=px.bar(calc.combined_by_month(),
                           title='Spending vs incoming by month')
         ),
 
         dcc.Graph(
-            id='diff_by_month',
+            id='diff-by-month',
             figure=px.bar(calc.diff_by_month(),
                           title='Diff by month')
         ),
 
         dcc.Graph(
-            id='combined_by_concept',
+            id='combined-by-concept',
             figure=px.bar(calc.combined_by_concept(),
                           title='Spending vs incoming by concept')
         ),
@@ -60,15 +61,28 @@ def plot(calc: Calculator) -> html.Div:
         '''),
 
         dcc.Graph(
-            id='spending_boxplot',
+            id='spending-boxplot',
             figure=px.box(calc.spending_abs(),
+                          y='amount',
                           title='Spending boxplot')
         ),
 
+        html.Div(id='spending-biggest-div', style= {'textAlign': 'center'}, children=[
+            html.Label('Biggest spendings'),
+            dcc.Input(id='spending-biggest-input', type='number', placeholder='Value of the spending'),
+            dt.DataTable(
+                id='spending-biggest-tab',
+                columns=[{'name': i, 'id': i} for i in calc.spending_biggest().columns],
+                style_cell={'textAlign': 'left'},
+                style_table={'textAlign': 'center', 'overflowY': 'auto', 'height': '300px'},
+            )
+        ]),
+
         dcc.Graph(
-            id='spending_by_concept',
-            figure=px.bar(calc.spending_by_concept(),
+            id='spending-by-concept',
+            figure=px.bar(calc.spending_by_concept_sorted(),
                           title='Spending by concept')
         ),
+
 
     ])
